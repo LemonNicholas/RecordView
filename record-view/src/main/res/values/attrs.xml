@@ -7,6 +7,7 @@
         <attr name="slide_to_cancel_bounds" format="dimension" />
         <attr name="slide_to_cancel_arrow_color" format="color" />
         <attr name="counter_time_color" format="color" />
+        <attr name="stop_text" format="string" />
     </declare-styleable>
 
     <declare-styleable name="RecordButton">

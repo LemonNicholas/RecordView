@@ -118,6 +118,7 @@ public class RecordView extends RelativeLayout {
             int slideMarginRight = (int) typedArray.getDimension(R.styleable.RecordView_slide_to_cancel_margin_right, 30);
             int counterTimeColor = typedArray.getColor(R.styleable.RecordView_counter_time_color, -1);
             int arrowColor = typedArray.getColor(R.styleable.RecordView_slide_to_cancel_arrow_color, -1);
+            String stopText = typedArray.getString(R.styleable.RecordView_stop_text);
 
             int cancelBounds = typedArray.getDimensionPixelSize(R.styleable.RecordView_slide_to_cancel_bounds, -1);
 
@@ -140,6 +141,8 @@ public class RecordView extends RelativeLayout {
             if (arrowColor != -1)
                 setSlideToCancelArrowColor(arrowColor);
 
+            if (stopText != null)
+                mStopView.setText(stopText);
 
             setMarginRight(slideMarginRight, true);
 
