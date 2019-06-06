@@ -20,10 +20,12 @@ public class RecordButton extends AppCompatImageView implements View.OnTouchList
     private RecordView recordView;
     private boolean listenForRecord = true;
     private OnRecordClickListener onRecordClickListener;
-
+    private int imageResource;
+    private int lockSendResource;
 
     public void setRecordView(RecordView recordView) {
         this.recordView = recordView;
+        recordView.setRecordButton(this);
     }
 
     public RecordButton(Context context) {
@@ -39,16 +41,18 @@ public class RecordButton extends AppCompatImageView implements View.OnTouchList
     public RecordButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
+    }
 
-
+    public int getImageResource() {
+        return imageResource;
     }
 
     private void init(Context context, AttributeSet attrs) {
         if (attrs != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.RecordButton);
 
-            int imageResource = typedArray.getResourceId(R.styleable.RecordButton_mic_icon, -1);
-
+            imageResource = typedArray.getResourceId(R.styleable.RecordButton_mic_icon, -1);
+            lockSendResource = typedArray.getResourceId(R.styleable.RecordButton_lock_send_resource, -1);
 
             if (imageResource != -1) {
                 setTheImageResource(imageResource);
@@ -89,11 +93,18 @@ public class RecordButton extends AppCompatImageView implements View.OnTouchList
     }
 
 
-    private void setTheImageResource(int imageResource) {
+    public void setTheImageResource(int imageResource) {
         Drawable image = AppCompatResources.getDrawable(getContext(), imageResource);
         setImageDrawable(image);
     }
 
+    public void setLockedSendResource(int lockSendResource) {
+        this.lockSendResource = lockSendResource;
+    }
+
+    public int getLockSendResource() {
+        return lockSendResource;
+    }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -145,6 +156,9 @@ public class RecordButton extends AppCompatImageView implements View.OnTouchList
 
     @Override
     public void onClick(View v) {
+        if (recordView.isLocked) {
+            return;
+        }
         if (onRecordClickListener != null)
             onRecordClickListener.onClick(v);
     }

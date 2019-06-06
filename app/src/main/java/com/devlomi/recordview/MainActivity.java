@@ -12,6 +12,7 @@ import com.devlomi.record_view.OnBasketAnimationEnd;
 import com.devlomi.record_view.OnRecordClickListener;
 import com.devlomi.record_view.OnRecordListener;
 import com.devlomi.record_view.RecordButton;
+import com.devlomi.record_view.RecordLockView;
 import com.devlomi.record_view.RecordView;
 
 import java.util.concurrent.TimeUnit;
@@ -26,10 +27,12 @@ public class MainActivity extends AppCompatActivity {
 
         RecordView recordView = (RecordView) findViewById(R.id.record_view);
         final RecordButton recordButton = (RecordButton) findViewById(R.id.record_button);
+        RecordLockView recordLockView = findViewById(R.id.recordLockView);
         Button btnChangeOnclick = (Button) findViewById(R.id.btn_change_onclick);
 
         //IMPORTANT
         recordButton.setRecordView(recordView);
+        recordView.setRecordLockView(recordLockView);
 
         // if you want to click the button (in case if you want to make the record button a Send Button for example..)
 //        recordButton.setListenForRecord(false);
