@@ -5,6 +5,7 @@ package com.devlomi.record_view;
  */
 
 public interface OnRecordListener {
+    void onPermissionDenied();
     void onStart();
     void onCancel();
     void onFinish(long recordTime);

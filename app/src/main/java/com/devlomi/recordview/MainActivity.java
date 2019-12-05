@@ -79,6 +79,11 @@ public class MainActivity extends AppCompatActivity {
 
         recordView.setOnRecordListener(new OnRecordListener() {
             @Override
+            public void onPermissionDenied() {
+                Toast.makeText(MainActivity.this, "OnPermissionDenied", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
             public void onStart() {
                 Log.d("RecordView", "onStart");
                 Toast.makeText(MainActivity.this, "OnStartRecord", Toast.LENGTH_SHORT).show();

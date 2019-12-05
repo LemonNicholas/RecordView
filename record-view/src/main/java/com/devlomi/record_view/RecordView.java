@@ -1,12 +1,15 @@
 package com.devlomi.record_view;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.content.res.AppCompatResources;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -280,11 +283,28 @@ public class RecordView extends RelativeLayout {
 
     }
 
+    private boolean isPemissionDenied = false;
+
 
     protected void onActionDown(RecordButton recordBtn, MotionEvent motionEvent) {
 
         if (isLocked)
             return;
+
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO)
+                != PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+            recordListener.onPermissionDenied();
+            isPemissionDenied = true;
+            return;
+        }
+        isPemissionDenied = false;
+//        String requiredPermission = Manifest.permission.RECORD_AUDIO;
+//        int checkVal = context.checkCallingOrSelfPermission(requiredPermission);
+//        if (checkVal == PackageManager.PERMISSION_DENIED) {
+//
+//        }
 
         if (recordListener != null)
             recordListener.onStart();
@@ -324,6 +344,7 @@ public class RecordView extends RelativeLayout {
     boolean isLocked = false;
 
     protected void onActionMove(RecordButton recordBtn, MotionEvent motionEvent) {
+        if (isPemissionDenied) return;
 
         long time = System.currentTimeMillis() - startTime;
 
@@ -400,7 +421,7 @@ public class RecordView extends RelativeLayout {
     }
 
     protected void onActionUp(RecordButton recordBtn) {
-
+        if (isPemissionDenied) return;
         if (isLocked && mStopView.getVisibility() != View.VISIBLE) {
             showLockedViews();
             return;
