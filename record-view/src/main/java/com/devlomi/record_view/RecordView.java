@@ -298,6 +298,13 @@ public class RecordView extends RelativeLayout {
             recordListener.onPermissionDenied();
             isPemissionDenied = true;
             return;
+        } else {
+            String requiredPermission = Manifest.permission.RECORD_AUDIO;
+            int checkVal = context.checkCallingOrSelfPermission(requiredPermission);
+            if (checkVal != PackageManager.PERMISSION_GRANTED) {
+                isPemissionDenied = true;
+                return;
+            }
         }
         isPemissionDenied = false;
 //        String requiredPermission = Manifest.permission.RECORD_AUDIO;
