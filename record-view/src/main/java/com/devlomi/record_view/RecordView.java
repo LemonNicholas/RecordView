@@ -420,7 +420,7 @@ public class RecordView extends RelativeLayout {
         lastY = motionEvent.getRawY();
     }
 
-    protected void onActionUp(RecordButton recordBtn) {
+    public void onActionUp(RecordButton recordBtn) {
         if (isPemissionDenied) return;
         if (isLocked && mStopView.getVisibility() != View.VISIBLE) {
             showLockedViews();
